@@ -1,50 +1,54 @@
-# French AI Agent
+# French AI Agent - Ollama Local
 
-A conversational AI agent that speaks French, with voice input/output capabilities and multiple backend options.
+A conversational AI agent that speaks French using local Ollama models, with voice input/output capabilities.
 
 ## Features
 
-- 🇫🇷 **French conversation** - Responds naturally in French
+- 🇫🇷 **French conversation** - Responds naturally in French using local models
 - 🎙️ **Voice input** - Speech-to-text with Whisper
 - 🔊 **Voice output** - Text-to-speech with macOS
 - 💾 **Memory** - Persistent conversation history
-- 🤖 **Multiple backends** - Ollama local models or OpenAI API
+- 🏠 **Local AI** - Uses Ollama for private, offline inference
+- 🌤️ **Weather tool** - Real-time weather lookup
 
 ## Quick Start
 
-1. **Setup virtual environment:**
+1. **Install Ollama:**
+   ```bash
+   # macOS
+   brew install ollama
+   # or download from https://ollama.ai
+   ```
+
+2. **Setup virtual environment:**
    ```bash
    python3 -m venv venv
    source venv/bin/activate
    pip install ollama openai-whisper sounddevice numpy requests
    ```
 
-2. **Run the simple agent (recommended):**
+3. **Start Ollama and pull model:**
    ```bash
-   python simple_french_agent.py
-   ```
-
-3. **Or run the Ollama-based agent:**
-   ```bash
-   # First ensure Ollama is running with a model
    ollama serve
    ollama pull phi3
-   
+   ```
+
+4. **Run the agent:**
+   ```bash
    python mistral_french_agent.py
    ```
 
 ## Files
 
-- **`simple_french_agent.py`** - Standalone agent with built-in responses and optional OpenAI
-- **`mistral_french_agent.py`** - Ollama-based agent with local LLM models
+- **`mistral_french_agent.py`** - Main agent using local Ollama models
 - **`Modelfile`** - Configuration for French Mistral model
 
 ## Configuration
 
-### OpenAI Integration (Optional)
-For better responses in the simple agent:
-```bash
-export OPENAI_API_KEY="your-api-key-here"
+### Model Selection
+The agent uses `phi3` by default. You can modify the model in the code:
+```python
+MODEL_NAME = "phi3"  # or "mistral", "llama2", etc.
 ```
 
 ### Voice Setup
@@ -70,13 +74,15 @@ export OPENAI_API_KEY="your-api-key-here"
 ## Development
 
 The project uses:
-- **Whisper** for speech recognition
 - **Ollama** for local LLM inference
-- **OpenAI API** as fallback/alternative
+- **Whisper** for speech recognition
 - **sounddevice** for audio capture
+- **requests** for weather API calls
 
 ## Troubleshooting
 
-- **Ollama issues**: Use `simple_french_agent.py` instead
-- **Voice not working**: Check microphone permissions
+- **Model not found**: Run `ollama pull phi3` first
+- **Ollama not running**: Start with `ollama serve`
+- **Voice not working**: Check microphone permissions in System Preferences
 - **SSL errors**: Fixed automatically in the code
+- **Weather not working**: Check internet connection
