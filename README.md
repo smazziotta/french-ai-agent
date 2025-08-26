@@ -1,14 +1,15 @@
 # French AI Agent
 
-A conversational AI agent that speaks French, with voice input/output capabilities and multiple backend options.
+A conversational AI agent that speaks French, powered by hosted Mistral AI with voice input/output capabilities.
 
 ## Features
 
-- 🇫🇷 **French conversation** - Responds naturally in French
+- 🇫🇷 **French conversation** - Responds naturally in French using Mistral AI
 - 🎙️ **Voice input** - Speech-to-text with Whisper
 - 🔊 **Voice output** - Text-to-speech with macOS
 - 💾 **Memory** - Persistent conversation history
-- 🤖 **Multiple backends** - Ollama local models or OpenAI API
+- 🚀 **Hosted LLM** - Uses Mistral AI API (with OpenAI fallback)
+- 📱 **No local setup** - No need for local model downloads
 
 ## Quick Start
 
@@ -16,35 +17,44 @@ A conversational AI agent that speaks French, with voice input/output capabiliti
    ```bash
    python3 -m venv venv
    source venv/bin/activate
-   pip install ollama openai-whisper sounddevice numpy requests
+   pip install openai-whisper sounddevice numpy requests openai
    ```
 
-2. **Run the simple agent (recommended):**
+2. **Get a Mistral API key:**
+   - Visit [console.mistral.ai](https://console.mistral.ai)
+   - Create an account and get your API key
+   - Or use OpenAI API as alternative
+
+3. **Configure API key:**
+   ```bash
+   export MISTRAL_API_KEY="your-mistral-api-key-here"
+   # OR for OpenAI
+   export OPENAI_API_KEY="your-openai-api-key-here"
+   ```
+
+4. **Run the agent:**
    ```bash
    python simple_french_agent.py
    ```
 
-3. **Or run the Ollama-based agent:**
-   ```bash
-   # First ensure Ollama is running with a model
-   ollama serve
-   ollama pull phi3
-   
-   python mistral_french_agent.py
-   ```
-
 ## Files
 
-- **`simple_french_agent.py`** - Standalone agent with built-in responses and optional OpenAI
-- **`mistral_french_agent.py`** - Ollama-based agent with local LLM models
-- **`Modelfile`** - Configuration for French Mistral model
+- **`simple_french_agent.py`** - Main agent using Mistral AI API with OpenAI fallback
+- **`mistral_french_agent.py`** - Legacy Ollama-based agent (deprecated)
+- **`Modelfile`** - Configuration for local Mistral model (deprecated)
 
 ## Configuration
 
-### OpenAI Integration (Optional)
-For better responses in the simple agent:
+### Mistral AI API (Recommended)
+Best performance and French language support:
 ```bash
-export OPENAI_API_KEY="your-api-key-here"
+export MISTRAL_API_KEY="your-mistral-api-key-here"
+```
+
+### OpenAI API (Alternative)
+Fallback option if Mistral is not available:
+```bash
+export OPENAI_API_KEY="your-openai-api-key-here"
 ```
 
 ### Voice Setup
@@ -70,13 +80,27 @@ export OPENAI_API_KEY="your-api-key-here"
 ## Development
 
 The project uses:
+- **Mistral AI API** for French language model inference
 - **Whisper** for speech recognition
-- **Ollama** for local LLM inference
-- **OpenAI API** as fallback/alternative
+- **OpenAI API** as fallback alternative
 - **sounddevice** for audio capture
+- **requests** for HTTP API calls
+
+## API Information
+
+### Mistral AI Models
+- **mistral-small-latest**: Balanced performance and cost
+- **mistral-medium-latest**: Higher quality responses
+- **mistral-large-latest**: Best quality, higher cost
+
+### Pricing (Mistral AI)
+- Very competitive pricing compared to alternatives
+- Pay-per-token usage model
+- Free tier available for testing
 
 ## Troubleshooting
 
-- **Ollama issues**: Use `simple_french_agent.py` instead
-- **Voice not working**: Check microphone permissions
+- **API key issues**: Ensure your Mistral or OpenAI API key is correctly set
+- **Voice not working**: Check microphone permissions in System Preferences
+- **Network errors**: Check internet connection and API status
 - **SSL errors**: Fixed automatically in the code
